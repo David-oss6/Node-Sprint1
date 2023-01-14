@@ -49,7 +49,7 @@ const comprimir = () => {
 const lista = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 const imprimirLista = (z) => {
     setTimeout(() => {
-        if (z > lista.length - 1) {
+        if (z >= lista.length - 1) {
             return console.log(lista[z])
         }
         console.log(lista[z])
