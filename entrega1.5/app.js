@@ -47,15 +47,14 @@ const comprimir = () => {
 
 //Nivell 2 ex 1
 const lista = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const imprimirLista = (z) => {
+    setTimeout(() => {
+        if (z > lista.length - 1) {
+            return console.log(lista[z])
+        }
+        console.log(lista[z])
+        return imprimirLista(z + 1)
+    }, [1000])
 
-const imprimirLista = () => {
-    for (i = 0; i < 10; i++) {
-        const z = new Promise((resolve) => {
-            setTimeout(() => {
-                console.log(lista[i])
-            }, [1000])
-        })
-        console.log(z)
-    }
 }
-imprimirLista()
+imprimirLista(0)
