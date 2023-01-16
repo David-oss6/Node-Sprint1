@@ -12,6 +12,7 @@ let templatefunction = (x) => {
 console.log(`${templatefunction(x)}`);
 
 // NIVELL 3 EXERCICI  1
+//revisar lo que es una matriz
 let arrayDeSumas = [
   () => {
     for (i = 0; i <= 10; i++) {
@@ -70,7 +71,6 @@ for (let i = 0; i < arrayDeSumas.length; i++) {
 }
 // NIVELL 3 EXERCICI 2
 let usuari = "El nombre de usuario va aqui";
-let funcionAnonima = function (usuari) {
+((usuari) => {
   console.log(`Nivell 3 exercici 2:${usuari}`);
-};
-funcionAnonima(usuari);
+})(usuari);

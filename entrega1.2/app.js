@@ -23,7 +23,9 @@ class Persona {
 let per = new Persona("Nivell 2 ex 2: David");
 per.dirNom();
 // NIVELL 3
-
+// Class animal
+//extends nueva clase
+//*super
 class Nuevo {
   constructor(x) {
     this.x = x;

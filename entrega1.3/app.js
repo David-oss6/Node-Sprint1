@@ -1,5 +1,5 @@
 //Nivell 1 ex 1
-const prom = true;
+const prom = false;
 const miFuncion = () => {
   return new Promise((resolve, reject) => {
     if (prom) {
@@ -26,11 +26,11 @@ const ultimafun = (x) => {
   }
   return res;
 };
-const nuevafun = () => {
-  const mensaje = ultimafun(x);
+const nuevafun = (x, callback) => {
+  const mensaje = callback(x);
   console.log(`Nivell 1 ex 2: ${x} ${mensaje}`);
 };
-nuevafun();
+nuevafun(x, ultimafun);
 
 //NIVELL 2 ex 1
 let employees = [
@@ -62,11 +62,11 @@ let salaries = [
     salary: 2000,
   },
 ];
-let idEmpleado = Math.floor(Math.random(1) * 4);
-const getEmployee = () => {
+// let idEmpleado = 1; //Math.floor(Math.random(1) * 4);
+const getEmployee = (id) => {
   const employee = new Promise((resolve, reject) => {
     let a = employees.find((x) => {
-      return x.id === idEmpleado;
+      return x.id === id;
     });
     a ? resolve(a.name) : reject("No se encontró el empleado");
   });
@@ -82,12 +82,12 @@ const getEmployee = () => {
 
   return employee;
 };
-// getEmployee();
+// getEmployee(3);
 //NIVELL 2 ex 2
-const getSalary = () => {
+const getSalary = (id) => {
   const salary = new Promise((resolve, reject) => {
     let a = salaries.find((x) => {
-      return x.id === idEmpleado;
+      return x.id === id;
     });
     a ? resolve(a.salary) : reject("No se encontró el salario");
   });
@@ -103,13 +103,13 @@ const getSalary = () => {
 
   return salary;
 };
-// getSalary();
+// getSalary(3);
 //NIVELL 2 ex 3
-const exTres = () => {
-  Promise.all([getEmployee(), getSalary()])
+const exTres = (x) => {
+  Promise.all([getEmployee(x), getSalary(x)])
     .then((values) => console.log("Respuesta nivell 2 ex 3:", values))
-    .catch(err => console.log('Respuesta nivell 3 ex 1: No es troba el treballador'))
-
+    .catch((err) =>
+      console.log("Respuesta nivell 3 ex 1: No es troba el treballador")
+    );
 };
-exTres();
-
+exTres(3);
