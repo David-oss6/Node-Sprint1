@@ -13,17 +13,26 @@ console.log(`${templatefunction(x)}`);
 
 // NIVELL 3 EXERCICI  1
 //revisar lo que es una matriz
-let arrayDeSumas = []
-for (let i = 0; i < arrayDeSumas.length; i++) {
-  arrayDeSumas[i] = new Array;
-  for (let z = 0; z < arrayDeSumas.length; z++) {
-    arrayDeSumas[i][z] = x + y
+let arrayDeSumas = [];
+const generarMatriz = () => {
+  for (let i = 0; i <= 10; i++) {
+    arrayDeSumas[i];
+    let add = nuevaArray();
+    arrayDeSumas.push(add);
   }
-}
-arrayDeSumas.forEach((list) => {
-  console.log(list)
-})
-console.log(arrayDeSumas)
+  console.log("Nivell 3 ex 1:", arrayDeSumas);
+};
+const nuevaArray = () => {
+  let nueva = [];
+  for (let i = 0; i <= 10; i++) {
+    nueva.push(i);
+  }
+
+  return nueva;
+};
+generarMatriz();
+
+console.log(arrayDeSumas);
 // NIVELL 3 EXERCICI 2
 let usuari = "El nombre de usuario va aqui";
 ((usuari) => {
