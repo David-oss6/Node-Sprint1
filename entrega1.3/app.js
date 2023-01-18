@@ -15,9 +15,9 @@ const miFuncion = () => {
 };
 miFuncion();
 //NIVELL 1 ex 2
-let x = Math.floor(Math.random() * 5);
-x = x % 2;
+
 const ultimafun = (x) => {
+  x = x % 2;
   let res;
   if (x == 0) {
     res = "x es par";
@@ -30,7 +30,7 @@ const nuevafun = (x, callback) => {
   const mensaje = callback(x);
   console.log(`Nivell 1 ex 2: ${x} ${mensaje}`);
 };
-nuevafun(x, ultimafun);
+nuevafun(4, ultimafun);
 
 //NIVELL 2 ex 1
 let employees = [
@@ -113,3 +113,5 @@ const exTres = (x) => {
     );
 };
 exTres(3);
+
+module.esports = { salaries, employees };
