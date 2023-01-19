@@ -3,41 +3,46 @@ const zlib = require("zlib");
 const gzip = zlib.createGzip();
 const fs = require("fs");
 const { setPriority } = require("os");
+const { buffer } = require("stream/consumers");
 
 const nombreArchivo = "archivo";
 const texto = "Nivell 1 ex 2: Este es el texto creado";
 
-const crearTexto = () => {
-  fs.writeFile("./archivo/texto.txt", texto, (err) => {
-    if (err) {
-      console.log("Algo salio mal en writeFile");
-    } else {
-      console.log("Nivell 1 ex 1: Archivo y texto creado");
-    }
-  });
-};
 const crearArchivo = () => {
   fs.mkdir(`./${nombreArchivo}`, (err) => {
     if (err) {
       console.log("Algo salio mal en mkdir");
+    } else {
+      fs.writeFile("./archivo/texto.txt", texto, (err) => {
+        if (err) {
+          console.log("Algo salio mal en writeFile");
+        } else {
+          console.log("Nivell 1 ex 1: Archivo y texto creado");
+        }
+      });
     }
   });
 };
 // crearArchivo();
-// crearTexto();
 
 const leerArchivo = () => {
   setTimeout(() => {
     console.log(fs.readFileSync("./archivo/texto.txt", "utf8"));
   }, [2000]);
 };
-// leerArchivo()
 
 // Nivell 1 exercici 3
-// const input = fs.createWriteStream("./archivo/texto.txt");
-// const output = fs.createWriteStream("./archivo/texto.txt.gz");
+
 const comprimir = () => {
-  input.pipe(gzip).pipe(output);
+  try {
+    const inp = fs.createReadStream("./archivo/texto.txt");
+    const out = fs.createWriteStream("./texto.gz", (err) => {
+      console.log("algo salio mal en n1ex3");
+    });
+    inp.pipe(gzip).pipe(out);
+  } catch {
+    console.log("algo salio mal en n1ex3");
+  }
 };
 // comprimir();
 
@@ -52,7 +57,7 @@ const imprimirLista = (z) => {
     return imprimirLista(z + 1);
   }, [1000]);
 };
-// imprimirLista(0)
+// imprimirLista(0);
 
 //Nivell 2 ex 2
 const fork = require("child_process").fork;
@@ -71,40 +76,14 @@ const nivellDos = () => {
 //NIVELL 3
 
 //Paso 1 - Codificar archivo
-const input1 = fs.readdir("./archivo", (err, files) => {
-  files = files.toString("base64");
-  console.log("Contenido de ./archivo-->", files);
-  return files;
-  // files = Buffer.from(files).toString("base64");
-  // console.log("Base64: ", files);
-  // return files;
+const input1 = fs.readFile("./archivo/texto.txt", (err) => {
+  err && console.log("algo salio mal n3 paso 1");
 });
+const hex = Buffer.from(input1).to("hex");
+console.log(hex);
+const output1 = fs.createWriteStream("./archivo", input1, (err) => {
+  console.log("algo salio mal en output2");
+});
+
 console.log(input1);
-// let codificadoHex = Buffer.from(input1).toString("base64");
-// console.log("codificadoHex", codificadoHex);
-// const output1 = fs.createWriteStream(`../entrega1.5/${input1}`);
-
-// let codificadoHex = Buffer.from(input1).toString("hex");
-// const output2 = fs.createWriteStream(`../${codificadoHex}.hex`);
-// console.log("hexadecimal", codificadoHex);
-
-// console.log(
-//   '"' + archivoAcodificar + '" converted to Base64 is "' + base64data + '"'
-// );
-
-//Paso 2  - Encriptar con algoritmo
-// let crypto = require("crypto");
-
-// let key = "14189dc35ae35e75ff31d7502e245cd9bc7803838fbfd5c773cdcd79b8a28bbd";
-// let cipher = crypto.createCipher("aes-256-cbc", key);
-// let input = fs.createReadStream("./archivo");
-// let output = fs.createWriteStream("./archivo.enc");
-
-// input.pipe(cipher).pipe(output);
-
-// output.on("finish", function () {
-//   console.log("Encrypted file written to disk!");
-// });
-
-//Paso 3 Desencriptar
-// Buffer.from("SGVsbG8gV29ybGQ=", 'base64').toString('ascii')
+// input1.pipe(inputHex).pipe(output1);
