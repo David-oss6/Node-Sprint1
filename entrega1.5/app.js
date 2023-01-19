@@ -2,8 +2,7 @@
 const zlib = require("zlib");
 const gzip = zlib.createGzip();
 const fs = require("fs");
-const { setPriority } = require("os");
-const { buffer } = require("stream/consumers");
+
 
 const nombreArchivo = "archivo";
 const texto = "Nivell 1 ex 2: Este es el texto creado";
@@ -76,14 +75,30 @@ const nivellDos = () => {
 //NIVELL 3
 
 //Paso 1 - Codificar archivo
-const input1 = fs.readFile("./archivo/texto.txt", (err) => {
-  err && console.log("algo salio mal n3 paso 1");
-});
-const hex = Buffer.from(input1).to("hex");
-console.log(hex);
-const output1 = fs.createWriteStream("./archivo", input1, (err) => {
-  console.log("algo salio mal en output2");
-});
 
-console.log(input1);
+
+const hexBase = () => {
+  const input1 = fs.readFile("./archivo/texto.txt", (err, data) => {
+    if (err) { console.log("algo salio mal n3 paso 1") } else {
+      const hexFile = Buffer.from(data).toString('hex')
+      const base64File = Buffer.from(data).toString('base64')
+
+      try {
+        fs.createWriteStream(`./${hexFile}.base64`, (err) => {
+          console.log('crear hexfile salio mal')
+        })
+      } catch (error) {
+        console.log('crear hexfile salio mal')
+      }
+      try {
+        fs.createWriteStream(`./${base64File}.hex`, (err) => {
+          console.log('crear base64File salio mal')
+        })
+      } catch { console.log('crear base64File salio mal') }
+
+    }
+  });
+}
+hexBase()
+// console.log(input1);
 // input1.pipe(inputHex).pipe(output1);
