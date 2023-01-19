@@ -113,5 +113,3 @@ const exTres = (x) => {
     );
 };
 exTres(3);
-
-module.esports = { salaries, employees };
