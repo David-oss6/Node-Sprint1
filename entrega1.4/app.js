@@ -61,10 +61,9 @@ const getSalary = (id) => {
     .catch((err) => {
       return err;
     });
-
   return salary;
 };
-
+console.log(getSalary(2));
 const exTres = async (id) => {
   let name = await getEmployee(id);
   let salary = await getSalary(id);
@@ -108,4 +107,4 @@ const llamarOperaciones = async (x, y, z) => {
   sumarTres(x, y, z);
   console.log(`Nivell 2 ex 1 primera parte: ${respuesta}`);
 };
-llamarOperaciones(2, 4, 6);
+// llamarOperaciones(2, 4, 6);

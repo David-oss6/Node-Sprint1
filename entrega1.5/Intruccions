@@ -1,5 +1,5 @@
 Aquesta entrega funciona fins el Nivell 3 primer pas
 
--   Perque tots els exercicis funcionin s`han de executar les funciones per ordre, 
-    estan totes al final de de cada exercici i de app.js
--   S`hauran de eliminar manuealment els arxius creats si es vol tornar a comprobar les funciones
+- Perque tots els exercicis funcionin s`han de executar les funciones per ordre,
+  estan totes les crides al final de de cada exercici i de app.js
+- S`hauran de eliminar manualment els arxius creats per les funcions si es vol tornar a comprobar-les

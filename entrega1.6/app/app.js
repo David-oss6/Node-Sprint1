@@ -49,19 +49,21 @@ const multiplicar = (x, y) => {
 //NIVEL 1 PASO 2 ******************
 
 const nuevafun = (z) => {
-  let mensaje = (z) => {
+  let res;
+  console.log(isNaN(z));
+  let isNumero = isNaN(z);
+  if (isNumero == true || z == null) {
+    res = `${z} no es un numero`;
+  } else {
     x = z % 2;
-    let res;
-    if (x == 0) {
+    if (x === 0) {
       res = `${z} es par`;
     } else {
       res = `${z} es impar`;
     }
-    console.log(res);
-    return res;
-  };
-  return mensaje(z);
-  console.log(mensaje);
+  }
+  console.log(res);
+  return res;
 };
 
 // NIVEL 1 PASO 3 ******************
@@ -88,7 +90,7 @@ const getEmployee = async (id) => {
 
   return employee;
 };
-
+// getEmployee(3);
 //nivell 2 ex 2
 const getSalary = (id) => {
   const salary = new Promise((resolve, reject) => {
@@ -121,8 +123,6 @@ const myPromise = () => {
 };
 const miFuncion = async () => {
   let respuesta = await myPromise();
-  console.log("Nivell 1 ex 2:", respuesta);
-  console.log(respuesta);
   return respuesta;
 };
 
