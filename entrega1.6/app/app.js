@@ -144,7 +144,37 @@ const sumarTres = async (x, y, z) => {
   // console.log(`Nivell 2 ex 1 Segunda parte: ${respuesta}`);
   return respuesta;
 };
-// (async () => await console.log(await doble(2)))();
+// NIVEL 2 PASO 2 ****************** NIVEL 2 PASO 2 ************
+class Persona {
+  constructor(nom) {
+    this.nom = nom;
+  }
+  dirNom() {
+    console.log(this.nom);
+    return this.nom;
+  }
+}
+let per = new Persona("Nivell 2 ex 2: David");
+per.dirNom();
+// NIVEL 2 PASO 3 ****************** NIVEL 2 PASO 3 ************
+class Moto {
+  constructor(x) {
+    this.x = x;
+  }
+}
+class Yamaha extends Moto {
+  constructor(marca) {
+    super(marca);
+    this.marca = marca;
+  }
+}
+class Suzuki extends Moto {
+  constructor(marca) {
+    super(marca);
+    this.marca = marca;
+  }
+}
+
 //FIN DE TODOS LOS PASOS ******************************************************
 if (typeof module !== "undefined") {
   module.exports = {
@@ -158,5 +188,9 @@ if (typeof module !== "undefined") {
     miFuncion,
     sumarTres,
     doble,
+    Persona,
+    Moto,
+    Yamaha,
+    Suzuki,
   };
 }

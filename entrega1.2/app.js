@@ -23,7 +23,6 @@ class Persona {
 let per = new Persona("Nivell 2 ex 2: David");
 per.dirNom();
 // NIVELL 3
-
 class Moto {
   constructor(x) {
     this.x = x;
@@ -31,39 +30,39 @@ class Moto {
 }
 class Yamaha extends Moto {
   constructor(marca) {
-    super(marca)
-    this.marca = marca
+    super(marca);
+    this.marca = marca;
   }
 }
 class Honda extends Moto {
   constructor(marca) {
-    super(marca)
-    this.marca = marca
+    super(marca);
+    this.marca = marca;
   }
 }
 class Suzuki extends Moto {
   constructor(marca) {
-    super(marca)
-    this.marca = marca
+    super(marca);
+    this.marca = marca;
   }
 }
 
 let creadora = (marca) => {
   let newMoto;
   switch (marca) {
-    case 'Yamaha':
+    case "Yamaha":
       newMoto = new Yamaha(marca);
-      console.log("Nivell 3 ex 3:", newMoto)
+      console.log("Nivell 3 ex 3:", newMoto);
       break;
-    case 'Sukuzi':
-      newMoto = new Suzuki(marca)
-      console.log("Nivell 3 ex 3:", newMoto)
+    case "Sukuzi":
+      newMoto = new Suzuki(marca);
+      console.log("Nivell 3 ex 3:", newMoto);
       break;
-    case 'Honda':
-      newMoto = new Honda(marca)
-      console.log("Nivell 3 ex 3:", newMoto)
+    case "Honda":
+      newMoto = new Honda(marca);
+      console.log("Nivell 3 ex 3:", newMoto);
     default:
-      console.log('Nivell 3 ex 3: La marca no existe')
+      console.log("Nivell 3 ex 3: La marca no existe");
   }
 };
-creadora('Yamaha');
+creadora("Yamaha");
