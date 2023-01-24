@@ -2,7 +2,7 @@
 const zlib = require("zlib");
 const gzip = zlib.createGzip();
 const fs = require("fs");
-const crypto = require('crypto');
+const crypto = require("crypto");
 
 const nombreArchivo = "archivo";
 const texto = "Nivell 1 ex 2: Este es el texto creado";
@@ -23,7 +23,6 @@ const crearArchivo = () => {
   });
 };
 // crearArchivo();
-
 
 const leerArchivo = () => {
   setTimeout(() => {
@@ -74,33 +73,6 @@ const nivellDos = () => {
 // nivellDos();
 
 //NIVELL 3
-
-//Paso 1 - Codificar archivo
-
-const hexBase = () => {
-  const input1 = fs.readFile("./archivo/texto.txt", (err, data) => {
-    if (err) { console.log("algo salio mal n3 paso 1") } else {
-      const hexFile = Buffer.from(data).toString('hex')
-      const base64File = Buffer.from(data).toString('base64')
-
-      try {
-        fs.createWriteStream(`./${hexFile}.base64`, (err) => {
-          console.log('crear hexfile salio mal')
-        })
-      } catch (error) {
-        console.log('crear hexfile salio mal')
-      }
-      try {
-        fs.createWriteStream(`./${base64File}.hex`, (err) => {
-          console.log('crear base64File salio mal')
-        })
-      } catch { console.log('crear base64File salio mal') }
-
-    }
-  });
-}
-// hexBase()
-
 // NIVEL 3 PASO 2 **************
 
 const key = crypto.randomBytes(32); // set random encryption key
@@ -108,51 +80,69 @@ const iv = crypto.randomBytes(16); // set random initialisation vector
 // ENC_KEY and IV can be generated as crypto.randomBytes(32).toString('hex');
 
 const encriptar = (textoAencriptar) => {
-  let cipher = crypto.createCipheriv(
-    'aes-256-cbc', Buffer.from(key), iv);
+  let cipher = crypto.createCipheriv("aes-256-cbc", Buffer.from(key), iv);
   let encrypted = cipher.update(textoAencriptar);
-  encrypted = Buffer.concat([encrypted, cipher.final()])
+  encrypted = Buffer.concat([encrypted, cipher.final()]);
   return {
-    iv: iv.toString('hex'),
-    encryptedData: encrypted.toString('hex')
+    iv: iv.toString("hex"),
+    encryptedData: encrypted.toString("hex"),
+  };
+};
+// BORRAR ARCHIVOS HEX Y BASE64 DESPUES DE CODIFICAR
+function removeOld(ruta) {
+  try {
+    fs.unlinkSync(`./${ruta}.hex`);
+  } catch {
+    // Tml2ZWxsIDEgZXggMjogRXN0ZSBlcyBlbCB0ZXh0byBjcmVhZG8=.hex
+    console.log(`no se pudo borrar la ruta ${ruta}.hex`);
+  }
+  try {
+    // 4e6976656c6c203120657820323a204573746520657320656c20746578746f2063726561646f.base
+    fs.unlinkSync(`./${ruta}.base64`);
+  } catch {
+    console.log(`no se pudo borrar la ruta ${ruta}.base64`);
   }
 }
-const hexToAes = fs.readFile('./Tml2ZWxsIDEgZXggMjogRXN0ZSBlcyBlbCB0ZXh0byBjcmVhZG8=.hex', (err, data) => {
-  if (err) { console.log('error') } else { return data }
-})
 
-let output = encriptar("hexToAes");
-console.log(output.encryptedData);
-const writeEncrypted = (archivo) => {
-  fs.writeFile(`./${archivo.encryptedData}`, archivo.encryptedData, err => {
-    conmsole.log('error')
-  })
-}
-// writeEncrypted(output.encryptedData)
+//Paso 1 - Codificar archivo
 
-// const base64ToAes = fs.readFile('./4e6976656c6c203120657820323a204573746520657320656c20746578746f2063726561646f.base64')
+const hexBase = () => {
+  // codificamos a hex y base64
+  const input1 = fs.readFile("./archivo/texto.txt", (err, data) => {
+    if (err) {
+      console.log("algo salio mal n3 paso 1");
+    } else {
+      const hexFile = Buffer.from(data).toString("hex");
+      const base64File = Buffer.from(data).toString("base64");
+      fs.createWriteStream(`./${hexFile}.hex`);
+      fs.createWriteStream(`./${base64File}.base64`);
 
-// const encrypt = ((val) => {
-//   let cipher = crypto.createCipheriv('aes-256-cbc', ENC_KEY, IV);
-//   // let encrypted = cipher.update(val, 'utf8', 'base64');
-//   // encrypted += cipher.final('base64');
-//   fs.writeFile('./hexToAes.aes', cipher, err => console.log('error'))
-//   return cipher;
-// });
-// fs.writeFile('./hexToAes.aes', cipher, err => console.log('error'))
-// var decrypt = ((encrypted) => {
-//   let decipher = crypto.createDecipheriv('aes-256-cbc', ENC_KEY, IV);
-//   let decrypted = decipher.update(encrypted, 'base64', 'utf8');
-//   return (decrypted + decipher.final('utf8'));
-// });
-// encrypted_key = encrypt(hexToAes);
-// original_phrase = decrypt(encrypted_key);
+      // encriptamos hexFile y bas64File
+      let output = encriptar(hexFile);
+      encrypted = output.encryptedData;
+      const writeEncrypted = (encrypted, fileName) => {
+        fs.writeFile(`./${fileName}`, encrypted, (err) => {
+          if (err) console.log(`error al crear archivo ${fileName} encryptado`);
+        });
+      };
+      writeEncrypted(encrypted, "hex-aes-192-cbc");
+      // encriptamos hexFile y bas64File
+      output = encriptar(base64File);
+      encrypted = output.encryptedData;
+      writeEncrypted(encrypted, "base64-aes-192-cbc");
+      removeOld(hexFile);
+      removeOld(base64File);
+    }
+  });
+};
+// hexBase();
 
 //Funcions per executar el esxercicis
 
 // crearArchivo();
-// leerArchivo()
+// leerArchivo();
 // comprimir();
 // imprimirLista(0);
-// nivellDos(); <------- Cal introduir manualment la direcció del directori a la linia 67
-// hexBase()
+// nivellDos(); // <------- Cal introduir manualment la direcció del directori a la linia 67
+// hexBase();     // genera los archivos hex y base64. Posteriormente hace el codificado aes-192-cbc
+// removeOld()    // elimina archivo hex y base64
