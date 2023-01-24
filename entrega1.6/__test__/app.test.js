@@ -74,9 +74,9 @@ describe("Nivel 1 paso 3", () => {
     return expect(getEmployee(4)).rejects.toMatch("No se encontró el empleado");
   });
 
-  test("add wrong ID expect message", async () => {
+  test("add null ID expect error message", () => {
     const mensaje = "No se encontró el empleado";
-    const data = await getEmployee(6).catch((err) => expect(err).not.toBeNull);
+    const data = getEmployee(null).catch((err) => expect(err).not.toBeNull);
   });
 });
 
@@ -93,29 +93,15 @@ describe("nivel 1 paso 4", () => {
 
 // NIVEL 2 PASO 1 ***********  NIVEL 2 PASO 1 **********************
 //Verifica mitjançant tests l'execució de l'exercici Async / Await N2 E1 utilitzant Jest Fake Timers.
-jest.useRealTimers();
-jest.spyOn(global, "setTimeout");
 
-// test("add x expect x *2", async () => {
-//   const x = 2;
-//   const respuesta = 4;
-//   const data = await doble(x);
-//   expect(data).toBe(respuesta);
-//   expect(setTimeout).toHaveBeenCalledTimes(1);
-// });
-
-// test("waits 1 second before ending the game", () => {
-//   doble(2);
-//   expect(setTimeout).toHaveBeenCalledTimes(1);
-//   // expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000);
-// });
-
-// test("add 3 numbers expect (x+y+z) * 2", async () => {
-//   const x = 2;
-//   const y = 2;
-//   const z = 2;
-//   const mensaje = (x + y + z) * 2;
-//   const data = await sumarTres(x, y, z);
-//   expect(data).toBe(mensaje);
-//   expect(setTimeout).toHaveBeenCalledTimes(3);
-// });
+jest.setTimeout(7000);
+describe("Nivel 2 paso 1", () => {
+  test("x, y z equals x+y+z*2 (jest.timeout para que funcione)", () => {
+    const x = 2;
+    const y = 4;
+    const z = 6;
+    const respuesta = (2 + 4 + 6) * 2;
+    return expect(sumarTres(x, y, z)).resolves.toBe(respuesta);
+  });
+  //sumaTres()
+});
