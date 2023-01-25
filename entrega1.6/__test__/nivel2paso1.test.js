@@ -11,5 +11,4 @@ describe("Nivel 2 paso 1", () => {
     const respuesta = (2 + 4 + 6) * 2;
     return expect(sumarTres(x, y, z)).resolves.toBe(respuesta);
   });
-  //sumaTres()
 });

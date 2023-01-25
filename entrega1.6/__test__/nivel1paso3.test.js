@@ -24,4 +24,14 @@ describe("Nivel 1 paso 3", () => {
     const mensaje = "No se encontró el empleado";
     const data = getEmployee(null).catch((err) => expect(err).not.toBeNull);
   });
+  test("add string recieve error message", () => {
+    return expect(getEmployee("sonsoles")).rejects.toMatch(
+      "No se encontró el empleado"
+    );
+  });
+  test("add undefined to recieve error message", () => {
+    return expect(getEmployee(undefined)).rejects.toMatch(
+      "No se encontró el empleado"
+    );
+  });
 });
