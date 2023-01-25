@@ -88,23 +88,42 @@ const encriptar = (textoAencriptar) => {
     encryptedData: encrypted.toString("hex"),
   };
 };
-// BORRAR ARCHIVOS HEX Y BASE64 DESPUES DE CODIFICAR
+//escribimos archivo encriptado
+const writeEncrypted = (encrypted, fileName) => {
+  fs.writeFile(`./${fileName}`, encrypted, (err) => {
+    if (err) console.log(`error al crear archivo ${fileName} encryptado`);
+  });
+};
+// BORRAR ARCHIVOS HEX Y BASE64 DESPUES DE CODIFICAR  <---- No funciona
 function removeOld(ruta) {
   try {
-    fs.unlinkSync(`./${ruta}.hex`);
+    fs.unlink(`./${ruta}.hex`);
   } catch {
     // Tml2ZWxsIDEgZXggMjogRXN0ZSBlcyBlbCB0ZXh0byBjcmVhZG8=.hex
     console.log(`no se pudo borrar la ruta ${ruta}.hex`);
   }
   try {
     // 4e6976656c6c203120657820323a204573746520657320656c20746578746f2063726561646f.base
-    fs.unlinkSync(`./${ruta}.base64`);
+    fs.unlink(`./${ruta}.base64`);
   } catch {
     console.log(`no se pudo borrar la ruta ${ruta}.base64`);
   }
 }
+// NIVEL 3 PASO 4
+function decrypt(text, tipoArchivo) {
+  let iv = Buffer.from(text.iv, `${tipoArchivo}`);
+  let encryptedText = Buffer.from(text.encryptedData, `${tipoArchivo}`);
+  let decipher = crypto.createDecipheriv("aes-256-cbc", Buffer.from(key), iv);
+  let decrypted = decipher.update(encryptedText);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  fs.writeFile(`./decrypted${tipoArchivo}`, decrypted.toString(), (err) => {
+    if (err) {
+      console.log(`fallo al desencriptar ${tipoArchivo}`);
+    }
+  });
+}
 
-//Paso 1 - Codificar archivo
+//NIVEL 3 Paso 1 - Codificar archivo
 
 const hexBase = () => {
   // codificamos a hex y base64
@@ -117,21 +136,18 @@ const hexBase = () => {
       fs.createWriteStream(`./${hexFile}.hex`);
       fs.createWriteStream(`./${base64File}.base64`);
 
-      // encriptamos hexFile y bas64File
-      let output = encriptar(hexFile);
-      encrypted = output.encryptedData;
-      const writeEncrypted = (encrypted, fileName) => {
-        fs.writeFile(`./${fileName}`, encrypted, (err) => {
-          if (err) console.log(`error al crear archivo ${fileName} encryptado`);
-        });
-      };
-      writeEncrypted(encrypted, "hex-aes-192-cbc");
-      // encriptamos hexFile y bas64File
-      output = encriptar(base64File);
-      encrypted = output.encryptedData;
-      writeEncrypted(encrypted, "base64-aes-192-cbc");
+      // encriptamos hexFile
+      let outputHex = encriptar(hexFile);
+      encryptedHex = outputHex.encryptedData;
+      writeEncrypted(encryptedHex, "hex-aes-192-cbc");
+      // encriptamos  bas64File
+      let outputBase64 = encriptar(base64File);
+      encryptedBase64 = outputBase64.encryptedData;
+      writeEncrypted(encryptedBase64, "base64-aes-192-cbc");
       removeOld(hexFile);
-      removeOld(base64File);
+      // removeOld(base64File);
+      decrypt(outputHex, "hex");
+      // decrypt(outputBase64, "base64");
     }
   });
 };
@@ -144,5 +160,5 @@ const hexBase = () => {
 // comprimir();
 // imprimirLista(0);
 // nivellDos(); // <------- Cal introduir manualment la direcció del directori a la linia 67
-// hexBase();     // genera los archivos hex y base64. Posteriormente hace el codificado aes-192-cbc
-// removeOld()    // elimina archivo hex y base64
+// hexBase(); // genera los archivos hex y base64. Posteriormente hace el codificado aes-192-cbc
+// los desencripta y escribe (no funciona con base64)
