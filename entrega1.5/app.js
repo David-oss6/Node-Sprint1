@@ -29,7 +29,7 @@ const leerArchivo = () => {
     console.log(fs.readFileSync("./archivo/texto.txt", "utf8"));
   }, [2000]);
 };
-//leerArchivo()
+// leerArchivo();
 // Nivell 1 exercici 3
 
 const comprimir = () => {
@@ -61,16 +61,31 @@ const imprimirLista = (z) => {
 //Nivell 2 ex 2
 const fork = require("child_process").fork;
 const sp1 = fork("nivell2exercici2.js");
+const { spawn, execFile } = require("child_process");
+const { exec } = require("child_process");
+const os = require("os");
+
+// check the available memory
+const homedir = os.homedir();
+console.log(homedir);
+exec(`cd ${homedir} | ls`);
 
 const nivellDos = () => {
-  fs.readdir("../../../../../mimot", (err, files) => {
+  exec(`ls ${homedir} `, (err, stdout, stderr) => {
+    if (err) {
+      console.error(` error: ${err}`);
+      return;
+    }
+    console.log(`Nivel 2 con exec() ${stdout}`);
+  });
+  fs.readdir(`${homedir}`, (err, files) => {
     console.log("nivell 2 ex 2:");
     files.forEach((file) => {
       sp1.send(file);
     });
   });
 };
-// nivellDos();
+nivellDos();
 
 //NIVELL 3
 // NIVEL 3 PASO 2 **************
@@ -144,10 +159,10 @@ const hexBase = () => {
       let outputBase64 = encriptar(base64File);
       encryptedBase64 = outputBase64.encryptedData;
       writeEncrypted(encryptedBase64, "base64-aes-192-cbc");
-      removeOld(hexFile);
-      // removeOld(base64File);
+      removeOld(hexFile); // no funciona
+      // removeOld(base64File);   no funciona
       decrypt(outputHex, "hex");
-      // decrypt(outputBase64, "base64");
+      // decrypt(outputBase64, "base64");  <-- no funciona
     }
   });
 };
