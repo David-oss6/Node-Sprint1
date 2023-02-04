@@ -1,16 +1,13 @@
 //NIVELL 1
-(() => {
-  console.log(`Nivell 1: ${1 + 1}`);
-})();
+console.log((funcioSuma = () => {
+  return 2 + 2
+})())
+
 // NIVELL 2 exercici 1
-let x = 6;
-let y = {};
 const fun = (x) => {
-  y = { age: x };
-  return y;
+  return { age: x };
 };
-fun(x);
-console.log("Nivell 2 ex 1:", y);
+console.log("Nivell 2 ex 1:", fun(3));
 // NIVELL 2 exercici 2
 class Persona {
   constructor(nom) {
@@ -28,41 +25,12 @@ class Moto {
     this.x = x;
   }
 }
-class Yamaha extends Moto {
-  constructor(marca) {
-    super(marca);
-    this.marca = marca;
-  }
-}
-class Honda extends Moto {
-  constructor(marca) {
-    super(marca);
-    this.marca = marca;
-  }
-}
-class Suzuki extends Moto {
-  constructor(marca) {
-    super(marca);
-    this.marca = marca;
-  }
-}
-
-let creadora = (marca) => {
-  let newMoto;
-  switch (marca) {
-    case "Yamaha":
-      newMoto = new Yamaha(marca);
-      console.log("Nivell 3 ex 3:", newMoto);
-      break;
-    case "Sukuzi":
-      newMoto = new Suzuki(marca);
-      console.log("Nivell 3 ex 3:", newMoto);
-      break;
-    case "Honda":
-      newMoto = new Honda(marca);
-      console.log("Nivell 3 ex 3:", newMoto);
-    default:
-      console.log("Nivell 3 ex 3: La marca no existe");
-  }
+let creadora = (x) => {
+  Moto.prototype.haceRum = function () {
+    console.log('Rumm rummm')
+  };
+  let newMoto = new Moto(x)
+  return newMoto
 };
-creadora("Yamaha");
+creadora("yamaha").haceRum()
+
