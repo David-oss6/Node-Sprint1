@@ -12,29 +12,18 @@ let templatefunction = (x) => {
 console.log(`${templatefunction(x)}`);
 
 // NIVELL 3 EXERCICI  1
-//revisar lo que es una matriz
-let arrayDeSumas = [];
-const generarMatriz = () => {
-  for (let i = 0; i <= 10; i++) {
-    arrayDeSumas[i];
-    let add = nuevaArray();
-    arrayDeSumas.push(add);
-  }
-  console.log("Nivell 3 ex 1:", arrayDeSumas);
-};
-const nuevaArray = () => {
-  let nueva = [];
-  for (let i = 0; i <= 10; i++) {
-    nueva.push(i);
-  }
 
-  return nueva;
-};
-generarMatriz();
+const logMatriz = () => {
+  for (let i = 0; i <= 10; i++) {
+    console.log("Nivell 3 ex 1:", i)
+  }
+}
+let arrayDeSumas = [logMatriz, logMatriz, logMatriz, logMatriz, logMatriz, logMatriz, logMatriz, logMatriz, logMatriz, logMatriz];
+arrayDeSumas.forEach((element) => {
+  element()
+})
 
-console.log(arrayDeSumas);
 // NIVELL 3 EXERCICI 2
-let usuari = "El nombre de usuario va aqui";
-((usuari) => {
-  console.log(`Nivell 3 exercici 2:${usuari}`);
-})(usuari);
+const llamarUsuario = ((usuari) => {
+  console.log(`Nivell 3 exercici 2: ${usuari}`);
+})('David');
