@@ -18,6 +18,7 @@ class Persona {
   }
 }
 let per = new Persona("Nivell 2 ex 2: David");
+
 per.dirNom();
 // NIVELL 3
 class Moto {

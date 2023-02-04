@@ -1,36 +1,33 @@
 //Nivell 1 ex 1
-const prom = false;
+const prom = true;
+
 const miFuncion = () => {
-  return new Promise((resolve, reject) => {
+  let novaPromesa = new Promise((resolve, reject) => {
     if (prom) {
       resolve("Nivell 1 ex 1 resolve: La promesa era true");
     } else {
       reject("Nivell 1 ex 1 reject: La promesa era falsa");
     }
   })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => console.log(err));
+  return novaPromesa
 };
-miFuncion();
-//NIVELL 1 ex 2
+miFuncion()
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => console.log(err));
 
-const ultimafun = (x) => {
-  x = x % 2;
-  let res;
-  if (x == 0) {
-    res = "x es par";
-  } else {
-    res = "x es impar";
-  }
-  return res;
-};
-const nuevafun = (x, callback) => {
-  const mensaje = callback(x);
-  console.log(`Nivell 1 ex 2: ${x} ${mensaje}`);
-};
-nuevafun(4, ultimafun);
+//NIVELL 1 ex 2
+const myCallback = (message) => {
+  console.log(message)
+}
+const myArrow = (prom, callback) => {
+  let mensaje;
+  if (prom) { mensaje = 'Nivell 1 ex 2: prom es true' }
+  else { mensaje = 'Nivell 1 ex 2: prom es false' }
+  callback(mensaje)
+}
+myArrow(prom, myCallback) // faig servir la variable prom definida al ex 1
 
 //NIVELL 2 ex 1
 let employees = [
@@ -62,54 +59,49 @@ let salaries = [
     salary: 2000,
   },
 ];
-// let idEmpleado = 1; //Math.floor(Math.random(1) * 4);
+
 const getEmployee = (id) => {
   const employee = new Promise((resolve, reject) => {
     let a = employees.find((x) => {
       return x.id === id;
     });
-    a ? resolve(a.name) : reject("No se encontró el empleado");
+    a ? resolve(a) : reject("No se encontró el empleado");
   });
-  employee
-    .then((res) => {
-      console.log("Nivell 2 ex 1:", res);
-      return res;
-    })
-    .catch((err) => {
-      console.log("Nivell 2 ex 1:", err);
-      return err;
-    });
-
   return employee;
 };
-// getEmployee(3);
-//NIVELL 2 ex 2
-const getSalary = (id) => {
-  const salary = new Promise((resolve, reject) => {
-    let a = salaries.find((x) => {
-      return x.id === id;
-    });
-    a ? resolve(a.salary) : reject("No se encontró el salario");
-  });
-  salary
-    .then((res) => {
-      console.log("Nivell 2 ex 2:", res);
-      return res;
-    })
-    .catch((err) => {
-      console.log("Nivell 2 ex 2:", err);
-      return err;
-    });
 
+getEmployee(2)
+  .then(res => console.log(`Nivell 2 ex 1`, res))
+  .catch(err => console.log(`Nivell 2 ex 1`, err))
+
+//NIVELL 2 ex 2
+const getSalary = (empleat) => {
+  const salary = new Promise((resolve, reject) => {
+    try {
+      let a = salaries.find((x) => {
+        return x.id === empleat.id;
+      });
+      a ? resolve(a.salary) : reject("No se encontró el salario");
+    } catch {
+      console.log("No se encontró al empleado")
+    }
+  });
   return salary;
 };
-// getSalary(3);
+getSalary(employees[1]).then(res => console.log(`Nivell 2 ex 2`, res))
+  .catch(err => console.log(`Nivell 2 ex 2`, err))
+
 //NIVELL 2 ex 3
 const exTres = (x) => {
-  Promise.all([getEmployee(x), getSalary(x)])
-    .then((values) => console.log("Respuesta nivell 2 ex 3:", values))
-    .catch((err) =>
-      console.log("Respuesta nivell 3 ex 1: No es troba el treballador")
-    );
+  getEmployee(x)
+    .then(
+      (res) => {
+        console.log(`Nivell 2 ex 3 emp`, res),
+          getSalary(res)
+            .then(res2 => console.log(`Nivell 2 ex 3 sal`, res2))
+            .catch(err2 => console.log(err2))
+      }
+    )
+    .catch(err => console.log(err))
 };
-exTres(3);
+exTres(1);
