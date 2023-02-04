@@ -27,10 +27,18 @@ class Moto {
 }
 let creadora = (x) => {
   Moto.prototype.haceRum = function () {
-    console.log('Rumm rummm')
+    console.log(`${x} hace Rumm rummm`)
   };
+  Moto.prototype.acelera = function () {
+    console.log(`${x} esta acelerando`)
+  }
+  Moto.prototype.frena = function () {
+    console.log(`${x} esta frenando`)
+  }
   let newMoto = new Moto(x)
   return newMoto
 };
 creadora("yamaha").haceRum()
+creadora("suzuki").acelera()
+creadora("honda").frena()
 
