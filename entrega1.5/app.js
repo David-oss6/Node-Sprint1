@@ -65,7 +65,6 @@ const { spawn, execFile } = require("child_process");
 const { exec } = require("child_process");
 const os = require("os");
 
-// check the available memory
 const homedir = os.homedir();
 console.log(homedir);
 exec(`cd ${homedir} | ls`);
@@ -174,6 +173,6 @@ const hexBase = () => {
 // leerArchivo();
 // comprimir();
 // imprimirLista(0);
-// nivellDos(); // <------- Cal introduir manualment la direcció del directori a la linia 67
+// nivellDos();
 // hexBase(); // genera los archivos hex y base64. Posteriormente hace el codificado aes-192-cbc
 // los desencripta y escribe (no funciona con base64)
