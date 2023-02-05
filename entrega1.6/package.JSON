@@ -1,10 +1,12 @@
 {
-  "name": "name",
-  "description": "description",
+  "name": "Entrega1.6",
+  "description": "Tests",
   "authors": "author",
   "version": "1.0.0",
   "main": "pathToMain",
-  "dependencies": {},
+  "dependencies": {
+    "jest": "^29.4.1"
+  },
   "scripts": {
     "test": "jest"
   }

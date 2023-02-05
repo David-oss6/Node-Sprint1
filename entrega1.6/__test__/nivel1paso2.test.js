@@ -1,18 +1,22 @@
-const { nuevafun } = require("../app/app"); // import de las funciones a testear
+const { myArrow, myCallback } = require("../app/app"); // import de las funciones a testear
 //PASO 2
 describe("Nivel 1 paso 2", () => {
-  test("enviamos 2 responde con par", () => {
-    expect(nuevafun(2)).toBe("2 es par");
+
+  test("enviamos prom = true, expect 'Nivell 1 ex 2: prom es true'", () => {
+    let prom = true
+    expect(myArrow(prom, myCallback)).toBe('Nivell 1 ex 2: prom es true');
   });
-  test("enviamos 3 responde con par", () => {
-    expect(nuevafun(3)).toBe("3 es impar");
+  test("enviamos prom = false, expect 'Nivell 1 ex 2: prom es false'", () => {
+    let prom = false
+    expect(myArrow(prom, myCallback)).toBe('Nivell 1 ex 2: prom es false');
   });
   // testeos adicionales **
-  test("enviamos NaN responde con NaN no es un numero", () => {
-    let x = "string";
-    expect(nuevafun(x)).toBeDefined();
+  test("enviamos un string en lugar de true o false responde con undefined", () => {
+    let prom = 'asd'
+    expect(myArrow(prom, myCallback)).toBeUndefined();
   });
-  test("null and undefined esta definido", () => {
-    expect(nuevafun(0)).not.toBeNull();
+  test("enviamos NULL en lugar de true o false responde con null", () => {
+    prom = null
+    expect(myArrow(prom, myCallback)).not.toBeNull();
   });
 });

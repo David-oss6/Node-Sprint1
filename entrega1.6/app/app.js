@@ -48,82 +48,58 @@ const multiplicar = (x, y) => {
 };
 //NIVEL 1 PASO 2 ******************
 
-const nuevafun = (z) => {
-  let res;
-  console.log(isNaN(z));
-  let isNumero = isNaN(z);
-  if (isNumero == true || z == null) {
-    res = `${z} no es un numero`;
-  } else {
-    x = z % 2;
-    if (x === 0) {
-      res = `${z} es par`;
-    } else {
-      res = `${z} es impar`;
-    }
-  }
-  console.log(res);
-  return res;
-};
+const myCallback = (message) => {
+  console.log(message)
+  return message
+}
+const myArrow = (prom, callback) => {
+  let mensaje;
+  console.log(prom)
+  if (prom == true) { mensaje = 'Nivell 1 ex 2: prom es true' }
+  else if (prom == false) { mensaje = 'Nivell 1 ex 2: prom es false' }
+  return callback(mensaje)
+}
+
 
 // NIVEL 1 PASO 3 ******************
 
-//nivell 2 ex 1
-const getEmployee = async (id) => {
-  const employee = await new Promise((resolve, reject) => {
+const getEmployee = (id) => {
+  const employee = new Promise((resolve, reject) => {
     let a = employees.find((x) => {
       return x.id === id;
     });
-    a ? resolve(a.name) : reject("No se encontró el empleado");
-    employee
-      .then((res) => {
-        console.log(`Nivell 2 ex 1: ${res}`);
-        res = `Nivell 2 ex 1: ${res}`;
-        return res;
-      })
-      .catch((err) => {
-        console.log(`Nivell 2 ex 1: ${err}`);
-        err = `Nivell 2 ex 1: ${err}`;
-        return err;
-      });
+    a ? resolve(a) : reject("No se encontró el empleado");
   });
-
   return employee;
 };
-// getEmployee(3);
+
 //nivell 2 ex 2
-const getSalary = (id) => {
+const getSalary = (empleat) => {
   const salary = new Promise((resolve, reject) => {
-    let a = salaries.find((x) => {
-      return x.id === id;
-    });
-    a ? resolve(a.salary) : reject("No se encontró el salario");
+    try {
+      let a = salaries.find((x) => {
+        return x.id === empleat.id;
+      });
+      a ? resolve(a.salary) : reject("No se encontró el salario");
+    } catch {
+      console.log("No se encontró al empleado")
+    }
   });
-  salary
-    .then((res) => {
-      console.log(`Nivell 2 ex 2: ${res}`);
-      res = `Nivell 2 ex 2: ${res}`;
-      return res;
-    })
-    .catch((err) => {
-      console.log(`Nivell 2 ex 2: ${err}`);
-      err = `Nivell 2 ex 2: ${err}`;
-      return err;
-    });
   return salary;
 };
 
 // NIVEL 1 PASO 4 ***************
 const myPromise = () => {
-  return new Promise((resolve) => {
+  let retProm = new Promise((resolve) => {
     setTimeout(() => {
       resolve("RESOLVE funciona");
     }, [2000]);
-  });
+  })
+  return retProm
 };
 const miFuncion = async () => {
   let respuesta = await myPromise();
-  return respuesta;
+  return respuesta
 };
 
 // NIVEL 2 PASO 1 ***********  NIVEL 2 PASO 1 **********************
@@ -137,13 +113,22 @@ const doble = async (x) => {
   });
 };
 const sumarTres = async (x, y, z) => {
-  let uno = await doble(x);
-  let dos = await doble(y);
-  let tres = await doble(z);
-  let respuesta = uno + dos + tres;
-  // console.log(`Nivell 2 ex 1 Segunda parte: ${respuesta}`);
-  return respuesta;
+  let uno, dos, tres;
+  let err1, err2, err3 = false;
+  try {
+    try { uno = await doble(x); } catch { err1 = true }
+    try { dos = await doble(y); } catch { err2 = true }
+    try { tres = await doble(z); } catch { err3 = true }
+    let respuesta = uno + dos + tres;
+    return respuesta
+  } catch {
+    err1 && console.log(console.log(`dobele ${x} fallo`))
+    err2 && console.log(console.log(`dobele ${y} fallo`))
+    err3 && console.log(console.log(`dobele ${z} fallo`))
+    return err1, err2, err3
+  }
 };
+// sumarTres(4, 2, 4).then(res => console.log(res)).catch(err => console.log(err))
 // NIVEL 2 PASO 2 ****************** NIVEL 2 PASO 2 ************
 class Persona {
   constructor(nom) {
@@ -162,18 +147,22 @@ class Moto {
     this.x = x;
   }
 }
-class Yamaha extends Moto {
-  constructor(marca) {
-    super(marca);
-    this.marca = marca;
+let creadora = (x) => {
+  Moto.prototype.haceRum = function () {
+    console.log(`${x} hace Rumm rummm`)
+  };
+  Moto.prototype.acelera = function () {
+    console.log(`${x} esta acelerando`)
   }
-}
-class Suzuki extends Moto {
-  constructor(marca) {
-    super(marca);
-    this.marca = marca;
+  Moto.prototype.frena = function () {
+    console.log(`${x} esta frenando`)
   }
-}
+  let newMoto = new Moto(x)
+  return newMoto
+};
+creadora("yamaha").haceRum()
+creadora("suzuki").acelera()
+creadora("honda").frena()
 
 //FIN DE TODOS LOS PASOS ******************************************************
 if (typeof module !== "undefined") {
@@ -182,15 +171,17 @@ if (typeof module !== "undefined") {
     restar,
     dividir,
     multiplicar,
-    nuevafun,
+    myArrow,
+    myCallback,
     getEmployee,
     getSalary,
+    myPromise,
     miFuncion,
     sumarTres,
     doble,
     Persona,
     Moto,
-    Yamaha,
-    Suzuki,
+    creadora
+
   };
 }

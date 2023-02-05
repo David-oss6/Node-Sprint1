@@ -103,7 +103,6 @@ const sumarTres = async (x, y, z) => {
     err2 && console.log(console.log(`dobel e ${y} fallo`))
     err3 && console.log(console.log(`dobel e ${z} fallo`))
   }
-
 };
 
 sumarTres(2, 2, 2).then(res => console.log(res))

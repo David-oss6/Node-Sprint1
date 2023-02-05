@@ -2,20 +2,24 @@ const { getEmployee, getSalary } = require("../app/app"); // import de las funci
 //PASO 3
 //Crea els tests corresponents per verificar el funcionament de les funcions de l'exercici Promises i Callbacks N2 E1 i Promises i Callbacks N2 E2 (getEmployee() i getSalary()).
 describe("Nivel 1 paso 3", () => {
-  test("add existing ID expect name", async () => {
+  test("add existing ID expect defined object", async () => {
     const data = await getEmployee(1);
-    expect(data).toBe("Linux Torvalds");
+    expect(data).toMatchObject({ id: 1, name: "Linux Torvalds" });
   });
 
-  test("add existing ID expect salary", async () => {
-    const data = await getSalary(1);
+  test("add employee object expect salary", async () => {
+    const employee = { id: 1, name: "Linux Torvalds" }
+    const data = await getSalary(employee);
     expect(data).toBe(4000);
   });
   // testeos adicionales **
   test("sin async await add existing ID expect name", () => {
-    return expect(getEmployee(1)).resolves.toBe("Linux Torvalds");
+    return expect(getEmployee(1)).resolves.toMatchObject({ id: 1, name: "Linux Torvalds" });
   });
-
+  test("sin async await object expect salary", () => {
+    const employee = { id: 1, name: "Linux Torvalds" }
+    return expect(getSalary(employee)).resolves.toBe(4000);
+  });
   test("sin async await add non existing ID expect error message", () => {
     return expect(getEmployee(4)).rejects.toMatch("No se encontró el empleado");
   });

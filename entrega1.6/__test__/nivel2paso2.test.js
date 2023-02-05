@@ -1,5 +1,5 @@
-const { Persona } = require("../app/app");
-// NIVEL 2 PASO 2 ****************** NIVEL 2 PASO 2 ************
+const { Persona, } = require("../app/app");
+
 jest.mock("../app/app.js");
 beforeEach(() => {
   // Clear all instances and calls to constructor and all methods:

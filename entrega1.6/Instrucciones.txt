@@ -1,0 +1,15 @@
+#  ENTREGA 1.6
+
+- ## Instalacions
+> Ejecuta lo siguiente comandos por consola antes de empezar
+
+### npm i 
+### npm i Jest
+
+- ## Funcionamiento
+
+### npm test 
+> para correr todos los test
+
+### npm test "nombre archivo del test" 
+> para ejecutar un test determinado

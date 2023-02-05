@@ -7,6 +7,9 @@ describe("nivel 1 paso 4", () => {
     expect(data).toBe("RESOLVE funciona");
   });
   test("miFuncion resolves after 2 seconds * 2", () => {
-    return expect(miFuncion()).resolves.toBe("RESOLVE funciona");
+    return expect(miFuncion()).resolves.toBe("RESOLVE funciona")
+  });
+  test("miFuncion retorna un string", () => {
+    return expect(miFuncion()).resolves.toMatch(/ /)
   });
 });
