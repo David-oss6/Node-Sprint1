@@ -28,56 +28,43 @@ let salaries = [
     salary: 2000,
   },
 ];
-
 const getEmployee = (id) => {
   const employee = new Promise((resolve, reject) => {
     let a = employees.find((x) => {
       return x.id === id;
     });
-    a ? resolve(a.name) : reject("No se encontró el empleado");
+    a ? resolve(a) : reject("No se encontró el empleado");
   });
-  employee
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      return err;
-    });
-
   return employee;
 };
-
-const getSalary = (id) => {
+const getSalary = (empleat) => {
   const salary = new Promise((resolve, reject) => {
-    let a = salaries.find((x) => {
-      return x.id === id;
-    });
-    a ? resolve(a.salary) : reject("No se encontró el salario");
+    try {
+      let a = salaries.find((x) => {
+        return x.id === empleat.id;
+      });
+      a ? resolve(a.salary) : reject("No se encontró el salario");
+    } catch {
+      console.log("No se encontró al empleado")
+    }
   });
-  salary
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      return err;
-    });
   return salary;
 };
-console.log(getSalary(2));
 const exTres = async (id) => {
-  let name = await getEmployee(id);
-  let salary = await getSalary(id);
-  console.log(`Nivell 1 ex 1: ${name} ${salary}`);
+  let employee = await getEmployee(id);
+  let salary = await getSalary(employee);
+  console.log(`Nivell 1 ex 1: ${employee.name} ${salary}`);
 };
-// exTres(Math.floor(Math.random(1) * 4));
+// exTres(1);
 
 // Nivell 1 EX 2
 const myPromise = () => {
-  return new Promise((resolve) => {
+  let retProm = new Promise((resolve) => {
     setTimeout(() => {
       resolve("RESOLVE funciona");
     }, [2000]);
-  });
+  })
+  return retProm
 };
 const miFuncion = async () => {
   let respuesta = await myPromise();
@@ -86,25 +73,37 @@ const miFuncion = async () => {
 // miFuncion();
 
 //Nivell 2 ex 1
-
 const doble = (x) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      x = x * 2;
-      resolve(x);
-    }, [2000]);
-  });
+  try {
+    let resposta = new Promise((resolve) => {
+      setTimeout(() => {
+        x = x * 2;
+        resolve(x);
+      }, [2000]);
+    });
+    return resposta
+  } catch {
+    let errDoble = 'algo salio mal en doble()'
+    return errDoble
+  }
+
 };
+// doble(2).then(res => console.log('Nivell 2 ex 1:', res))
 const sumarTres = async (x, y, z) => {
-  let uno = await doble(x);
-  let dos = await doble(y);
-  let tres = await doble(z);
-  let respuesta = uno + dos + tres;
-  console.log(`Nivell 2 ex 1 Segunda parte: ${respuesta}`);
+  let uno, dos, tres;
+  let err1, err2, err3 = false;
+  try {
+    try { uno = await doble(x); } catch { err1 = true }
+    try { dos = await doble(y); } catch { err2 = true }
+    try { tres = await doble(z); } catch { err3 = true }
+    let respuesta = uno + dos + tres;
+    return respuesta
+  } catch {
+    err1 && console.log(console.log(`dobel e ${x} fallo`))
+    err2 && console.log(console.log(`dobel e ${y} fallo`))
+    err3 && console.log(console.log(`dobel e ${z} fallo`))
+  }
+
 };
-const llamarOperaciones = async (x, y, z) => {
-  let respuesta = await doble(x);
-  sumarTres(x, y, z);
-  console.log(`Nivell 2 ex 1 primera parte: ${respuesta}`);
-};
-// llamarOperaciones(2, 4, 6);
+
+sumarTres(2, 2, 2).then(res => console.log(res))
