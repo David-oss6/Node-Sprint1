@@ -45,7 +45,7 @@ const getSalary = (empleat) => {
       });
       a ? resolve(a.salary) : reject("No se encontró el salario");
     } catch {
-      console.log("No se encontró al empleado")
+      console.log("No se encontró al empleado");
     }
   });
   return salary;
@@ -63,8 +63,8 @@ const myPromise = () => {
     setTimeout(() => {
       resolve("RESOLVE funciona");
     }, [2000]);
-  })
-  return retProm
+  });
+  return retProm;
 };
 const miFuncion = async () => {
   let respuesta = await myPromise();
@@ -81,28 +81,29 @@ const doble = (x) => {
         resolve(x);
       }, [2000]);
     });
-    return resposta
+    return resposta;
   } catch {
-    let errDoble = 'algo salio mal en doble()'
-    return errDoble
+    let errDoble = "algo salio mal en doble()";
+    return errDoble;
   }
-
 };
 // doble(2).then(res => console.log('Nivell 2 ex 1:', res))
 const sumarTres = async (x, y, z) => {
   let uno, dos, tres;
-  let err1, err2, err3 = false;
+  let err1,
+    err2,
+    err3 = false;
   try {
-    try { uno = await doble(x); } catch { err1 = true }
-    try { dos = await doble(y); } catch { err2 = true }
-    try { tres = await doble(z); } catch { err3 = true }
+    uno = await doble(x);
+    dos = await doble(y);
+    tres = await doble(z);
     let respuesta = uno + dos + tres;
-    return respuesta
+    return respuesta;
   } catch {
-    err1 && console.log(console.log(`dobel e ${x} fallo`))
-    err2 && console.log(console.log(`dobel e ${y} fallo`))
-    err3 && console.log(console.log(`dobel e ${z} fallo`))
+    (err) => {
+      console.log(err);
+    };
   }
 };
 
-sumarTres(2, 2, 2).then(res => console.log(res))
+// sumarTres(2, 2, 2).then((res) => console.log(res));
