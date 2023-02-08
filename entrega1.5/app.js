@@ -4,15 +4,23 @@ const gzip = zlib.createGzip();
 const fs = require("fs");
 const crypto = require("crypto");
 
-const nombreArchivo = "archivo";
-const texto = "Nivell 1 ex 2: Este es el texto creado";
-
-const crearArchivo = () => {
-  fs.mkdir(`./${nombreArchivo}`, (err) => {
+const crearArchivo = (nombreArchivo, textoArchivo) => {
+  fs.mkdir(`./files`, (err) => {
     if (err) {
-      console.log("Algo salio mal en mkdir");
+      console.log(
+        `la carpeta files ya existe, procediendo a crear ${nombreArchivo}.txt`
+      );
+      fs.writeFile(`./files/${nombreArchivo}.txt`, textoArchivo, (err) => {
+        if (err) {
+          console.log("Algo salio mal en writeFile");
+        } else {
+          console.log(
+            `Nivell 1 ex 1: ${nombreArchivo} y ${textoArchivo} creado`
+          );
+        }
+      });
     } else {
-      fs.writeFile("./archivo/texto.txt", texto, (err) => {
+      fs.writeFile(`./files/${nombreArchivo}.txt`, textoArchivo, (err) => {
         if (err) {
           console.log("Algo salio mal en writeFile");
         } else {
@@ -22,20 +30,22 @@ const crearArchivo = () => {
     }
   });
 };
-// crearArchivo();
+// let archivo = "archivoDavid";
+// let texto = "Nivell 1 ex 2: Este es el texto creado";
+// crearArchivo(archivo, texto);
 
-const leerArchivo = () => {
+const leerArchivo = (archivo) => {
   setTimeout(() => {
-    console.log(fs.readFileSync("./archivo/texto.txt", "utf8"));
+    console.log(fs.readFileSync(`./files/${archivo}.txt`, "utf8"));
   }, [2000]);
 };
-// leerArchivo();
+// leerArchivo(archivo);
 // Nivell 1 exercici 3
 
-const comprimir = () => {
+const comprimir = (nombreArchivo) => {
   try {
-    const inp = fs.createReadStream("./archivo/texto.txt");
-    const out = fs.createWriteStream("./texto.gz", (err) => {
+    const inp = fs.createReadStream(`./files/${nombreArchivo}.txt`);
+    const out = fs.createWriteStream(`./${nombreArchivo}.gz`, (err) => {
       console.log("algo salio mal en n1ex3");
     });
     inp.pipe(gzip).pipe(out);
@@ -43,7 +53,7 @@ const comprimir = () => {
     console.log("algo salio mal en n1ex3");
   }
 };
-// comprimir();
+// comprimir(archivo);
 
 //Nivell 2 ex 1
 const lista = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -60,7 +70,7 @@ const imprimirLista = (z) => {
 
 //Nivell 2 ex 2
 const fork = require("child_process").fork;
-const sp1 = fork("nivell2exercici2.js");
+const sp1 = fork("./nivell2exercici2.js");
 const { spawn, execFile } = require("child_process");
 const { exec } = require("child_process");
 const os = require("os");
@@ -84,7 +94,7 @@ const nivellDos = () => {
     });
   });
 };
-nivellDos();
+// nivellDos();
 
 //NIVELL 3
 // NIVEL 3 PASO 2 **************
@@ -169,9 +179,12 @@ const hexBase = () => {
 
 //Funcions per executar el esxercicis
 
-// crearArchivo();
-// leerArchivo();
-// comprimir();
+// let archivo = "archivoDavid";
+// let texto = "Nivell 1 ex 2: Este es el texto creado";
+
+// crearArchivo(archivo, texto);
+// leerArchivo(archivo);
+// comprimir(archivo);
 // imprimirLista(0);
 // nivellDos();
 // hexBase(); // genera los archivos hex y base64. Posteriormente hace el codificado aes-192-cbc
